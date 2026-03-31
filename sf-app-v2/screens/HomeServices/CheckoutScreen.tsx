@@ -208,7 +208,7 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
       clearCart();
       setSchedule(null);
       showMessage({ message: "Payment successful! Your order is confirmed.", type: "success" });
-      navigation.navigate("HomeServicesScreen");
+      navigation.navigate("RecentOrdersScreen");
     } catch (e: any) {
       console.error("Payment error:", e);
       const errorMessage = e?.response?.data?.message || e?.message || "Payment failed. Please try again.";

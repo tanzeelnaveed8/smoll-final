@@ -32,6 +32,7 @@ import { PaymentLogModule } from './modules/payment-log/payment-log.module';
 import { OrganizationModule } from './modules/organization/organization.module';
 import { ServiceModule } from './modules/service/service.module';
 import { ProductModule } from './modules/product/product.module';
+import { OrderModule } from './modules/order/order.module';
 import { ClsContextService } from './utils/cls-context.service';
 import { RequestContextMiddleware } from './middleware/request-context.middleware';
 import * as dotenv from 'dotenv';
@@ -87,6 +88,7 @@ const REDIS_ENABLED = process.env.REDIS_ENABLED !== 'false';
     OrganizationModule,
     ServiceModule,
     ProductModule,
+    OrderModule,
   ],
   providers: [
     {
