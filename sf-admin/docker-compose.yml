@@ -1,0 +1,23 @@
+version: '3'
+
+services:
+  admin:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5175:5175"
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+    environment:
+      - NODE_ENV=production
+    env_file:
+      - .env
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    external: true
+    name: sf-server_default

@@ -1,0 +1,57 @@
+* {
+  font-family: 'Roboto', sans-serif;
+}
+
+.gr-1 { gap: 4px; }
+.gr-2 { gap: 8px; }
+.gr-3 { gap: 12px; }
+.gr-4 { gap: 16px; }
+.gr-5 { gap: 20px; }
+.gr-6 { gap: 24px; }
+
+html, body, #app {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+.v-layout {
+  min-height: 100vh;
+}
+
+/* Page container - used by all views */
+.page-container {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 100%;
+  background-color: #f8fafb;
+}
+
+@media (min-width: 600px) {
+  .page-container {
+    padding: 20px 24px;
+    gap: 20px;
+  }
+}
+
+/* Smooth scrolling */
+.v-main {
+  -webkit-overflow-scrolling: touch;
+  flex: 1 0 auto;
+  overflow-y: auto;
+}
+
+/* Better touch targets */
+.v-btn {
+  min-height: 36px;
+}
+
+/* Card improvements */
+.v-card {
+  overflow: hidden;
+}

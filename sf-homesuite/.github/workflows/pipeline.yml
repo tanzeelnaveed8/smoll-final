@@ -1,0 +1,42 @@
+name: Deploy HomeSuite Portal to DigitalOcean
+
+on:
+  push:
+    branches:
+      - master
+      - staging
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy to DigitalOcean Droplet
+        env:
+          HOST: ${{ github.ref == 'refs/heads/master' && secrets.HOST || secrets.STAGING_HOST }}
+          USERNAME: ${{ secrets.USERNAME }}
+          SSH_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          VITE_API_URL: ${{ github.ref == 'refs/heads/master' && vars.VITE_API_URL || vars.VITE_STAGING_API_URL }}
+          NODE_ENV: ${{ github.ref == 'refs/heads/master' && 'production' || 'staging' }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H $HOST >> ~/.ssh/known_hosts
+
+          echo "Creating sf-homesuite directory..."
+          ssh -i ~/.ssh/id_rsa $USERNAME@$HOST "mkdir -p ~/app/sf-homesuite"
+
+          echo "Copying files..."
+          scp -i ~/.ssh/id_rsa -r ./* $USERNAME@$HOST:~/app/sf-homesuite/
+
+          echo "Creating .env file..."
+          ssh -i ~/.ssh/id_rsa $USERNAME@$HOST "echo 'VITE_API_URL=$VITE_API_URL' > ~/app/sf-homesuite/.env"
+
+          echo "Verifying .env file..."
+          ssh -i ~/.ssh/id_rsa $USERNAME@$HOST "cat ~/app/sf-homesuite/.env"
+
+          echo "Deploying..."
+          ssh -i ~/.ssh/id_rsa $USERNAME@$HOST "cd ~/app/sf-homesuite && docker-compose stop homesuite && docker-compose rm -f homesuite && docker-compose build --no-cache homesuite && docker-compose up -d homesuite && echo '=== Container status ===' && docker-compose ps && echo '=== Container logs ===' && docker-compose logs --tail=20 homesuite"
