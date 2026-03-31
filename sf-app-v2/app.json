@@ -1,0 +1,15 @@
+{
+  "name": "main",
+  "displayName": "smoll",
+  "ios": {
+    "supportsTablet": true,
+    "bundleIdentifier": "com.outlyze.sf"
+  },
+  "android": {
+    "package": "com.seldom.small_friend",
+    "adaptiveIcon": {
+      "foregroundImage": "./assets/adaptive-icon.png",
+      "backgroundColor": "#ffffff"
+    }
+  }
+}

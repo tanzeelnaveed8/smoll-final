@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Service Records</title>
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        thead {
+            background-color: #000;
+            color: #fff;
+        }
+
+        thead th {
+            padding: 15px;
+            text-align: left;
+            font-size: 14px;
+        }
+
+        tbody tr {
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        tbody tr:hover {
+            background-color: #f8f8f8;
+        }
+
+        tbody td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+            color: #333;
+        }
+
+        .notes {
+            background-color: #f9f9f9;
+            padding: 12px;
+            border-top: 1px solid #ccc;
+            font-size: 14px;
+            color: #555;
+        }
+
+        @media print {
+            .no-print {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <%
+  const monthNames = [
+    "January", "February", "March", "April", "May", "June",
+    "July", "August", "September", "October", "November", "December"
+  ];
+  const monthName = monthNames[month - 1]; // assuming month is 1-based (1 = Jan)
+%>
+    <h2>Services Log Sheet - <%= monthName %> <%= year %></h2>
+    <div class="no-print" style="text-align: center; margin-bottom: 20px">
+        <a href="/services/pdf" style="
+          background: #000;
+          color: #fff;
+          padding: 10px 20px;
+          text-decoration: none;
+          border-radius: 5px;
+          font-weight: bold;
+        ">Download as PDF</a>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Service Name</th>
+                <th>Date</th>
+                <th>Pet Owner</th>
+                <th>Membership ID</th>
+                <th>Vet Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% data.forEach(function(record) { %>
+                <tr>
+                    <td>
+                        <%= record.serviceName %>
+                    </td>
+                    <td>
+                        <%= new Date(record.date).toLocaleDateString('en-US') %>
+                    </td>
+                    <td>
+                        <%= record.petOwner %>
+                    </td>
+                    <td>
+                        <%= record.membershipId %>
+                    </td>
+                    <td>
+                        <%= record.vetName %>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="5" class="notes">
+                        <strong>Notes:</strong>
+                        <%= record.note || 'No notes' %>
+                    </td>
+                </tr>
+                <% }) %>
+        </tbody>
+    </table>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "582103238344",
+    "project_id": "blla-n",
+    "storage_bucket": "blla-n.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582103238344:android:cd3ca6e0060616ddf807fd",
+        "android_client_info": {
+          "package_name": "com.seldom.blla"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582103238344-kg7vr6hmnd9q49lmlaju11ck4rprjsri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfuNEXnwNBj2ZbVVXNX8MxKoqLTJ5in7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582103238344-kg7vr6hmnd9q49lmlaju11ck4rprjsri.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "582103238344-ob2mmvuvc9ts7k8b6b7s2dper12mce00.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.seldom.blla"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:582103238344:android:53b0206f231bbf03f807fd",
+        "android_client_info": {
+          "package_name": "com.seldom.small_friend"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "582103238344-kg7vr6hmnd9q49lmlaju11ck4rprjsri.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDfuNEXnwNBj2ZbVVXNX8MxKoqLTJ5in7Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "582103238344-kg7vr6hmnd9q49lmlaju11ck4rprjsri.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "582103238344-ob2mmvuvc9ts7k8b6b7s2dper12mce00.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.seldom.blla"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

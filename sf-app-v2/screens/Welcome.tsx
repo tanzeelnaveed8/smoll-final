@@ -1,0 +1,78 @@
+import Layout from "@/components/app/Layout";
+import SmollVet from "@/components/icons/SmollVet";
+import ButtonPrimary from "@/components/partials/ButtonPrimary";
+import { fontHauora, fontHauoraBold } from "@/constant/constant";
+import { useUserInfoStore } from "@/store/modules/userInfo";
+import { NavigationType } from "@/store/types";
+import React from "react";
+import { StyleSheet } from "react-native";
+import { Button, Div, Image, Text } from "react-native-magnus";
+import { SvgXml } from "react-native-svg";
+
+const Welcome: React.FC<{ navigation: NavigationType }> = ({ navigation }) => {
+  const userInfo = useUserInfoStore((state) => state.userInfo);
+  console.log("user info in welcome screen-->",userInfo)
+
+  const vites=`<svg xmlns="http://www.w3.org/2000/svg" width="153.233" height="38" viewBox="0 0 153.233 38">
+  <g id="Group_5276" data-name="Group 5276" transform="translate(4988.528 -17333.26)">
+    <path id="Path_9244" data-name="Path 9244" d="M-68.427-23.743c0,.883-.9,1.485-2.58,1.485a14.96,14.96,0,0,1-7.413-2.488v5.177a16.26,16.26,0,0,0,7.453,1.726c5.529,0,8.559-2.769,8.559-6.421,0-2.568-1.351-4.374-4.669-5.458l-4.3-1.4c-1.024-.321-1.515-.843-1.515-1.445,0-.843.737-1.445,2.293-1.445a12.635,12.635,0,0,1,6.8,2.247v-5.257a14.324,14.324,0,0,0-6.675-1.565c-5.078,0-8.273,2.649-8.273,6.581,0,2.689,1.72,4.535,4.546,5.417l3.972,1.244C-68.878-24.907-68.427-24.425-68.427-23.743Zm19.125-9.39c2.13,0,3.358,1.445,3.358,3.572v11.357h6.471v-12.6a4.275,4.275,0,0,0-.041-.722,4.9,4.9,0,0,1,3.768-1.605c2.13,0,3.358,1.445,3.358,3.572v11.357h6.471v-12.6c0-4.575-2.621-7.865-7.617-7.865a8.486,8.486,0,0,0-7,3.411c-1.188-2.127-3.358-3.411-6.43-3.411a8.069,8.069,0,0,0-6.184,2.608V-38.23h-6.307v20.025h6.471V-31.568A4.9,4.9,0,0,1-49.3-33.133Zm26.292,4.976c0,5.979,4.792,10.353,11.016,10.353S-.773-22.258-.773-28.278c0-5.979-4.71-10.353-11.016-10.353C-18.055-38.631-23.01-34.177-23.01-28.157Zm15.931,0c0,3.05-2.048,5.177-4.792,5.177A4.853,4.853,0,0,1-16.7-28.157a4.853,4.853,0,0,1,4.832-5.177C-9.127-33.334-7.08-31.207-7.08-28.157Zm9.255,9.952H8.687V-47.58L2.176-46.9Zm10.566,0h6.512V-47.58l-6.512.682Z" transform="translate(-4909.781 17380.84)" fill="#405B7A"/>
+    <path id="Path_9245" data-name="Path 9245" d="M-27.47-110.159h-.857v1.564h.857a2.02,2.02,0,0,0,1.017-.18.692.692,0,0,0,.278-.63.615.615,0,0,0-.314-.572A2.023,2.023,0,0,0-27.47-110.159Zm.112-.39a2.515,2.515,0,0,1,1.349.282.979.979,0,0,1,.431.882,1.043,1.043,0,0,1-.283.744,1.185,1.185,0,0,1-.752.355l.969,1.964h-.668l-.928-1.884h-1.086v1.884h-.586v-4.227Zm3.248,2.169a3.235,3.235,0,0,0-.25-1.262,3.246,3.246,0,0,0-.719-1.062,3.347,3.347,0,0,0-1.1-.722,3.424,3.424,0,0,0-1.3-.247,3.382,3.382,0,0,0-1.282.245,3.223,3.223,0,0,0-1.068.7,3.437,3.437,0,0,0-.742,1.089,3.169,3.169,0,0,0-.258,1.254,3.143,3.143,0,0,0,.255,1.247,3.294,3.294,0,0,0,.734,1.067,3.4,3.4,0,0,0,1.089.722,3.293,3.293,0,0,0,1.272.252,3.341,3.341,0,0,0,1.282-.255,3.486,3.486,0,0,0,1.109-.73,3.151,3.151,0,0,0,.722-1.047A3.2,3.2,0,0,0-24.11-108.38Zm-3.36-3.653a3.812,3.812,0,0,1,1.441.275,3.65,3.65,0,0,1,1.211.8,3.475,3.475,0,0,1,.8,1.174,3.632,3.632,0,0,1,.275,1.4,3.576,3.576,0,0,1-.273,1.4,3.449,3.449,0,0,1-.8,1.159,3.87,3.87,0,0,1-1.231.812,3.7,3.7,0,0,1-1.42.282A3.673,3.673,0,0,1-28.882-105a3.723,3.723,0,0,1-1.209-.807,3.589,3.589,0,0,1-.816-1.179,3.513,3.513,0,0,1-.28-1.389,3.518,3.518,0,0,1,.286-1.394,3.8,3.8,0,0,1,.821-1.2,3.527,3.527,0,0,1,1.183-.784A3.776,3.776,0,0,1-27.47-112.033Z" transform="translate(-4856.069 17445.293)" fill="#405B7A"/>
+    <text id="Vet" transform="translate(-4884.295 17333.26)" fill="#405B7A" font-size="28" font-family="Hauora-Light, Hauora" font-weight="300" letter-spacing="0em"><tspan x="0" y="30">Vet</tspan></text>
+  </g>
+</svg>
+`;
+  return (
+    <Layout style={{ backgroundColor: "#FAF8F5" }}>
+      <Div alignItems="center" mt={24} px={20} >
+        <Image
+          w={300}
+          h={279}
+          resizeMode="contain"
+          source={require("../assets/images/Young-Man-Computer.png")}
+          mb={12}
+        />
+
+        <Text   color="#000000" mb={6} fontSize="2xl" textAlign="center">
+          Welcome to
+        </Text>
+
+        <Div mb={8}>
+        
+       
+         <SmollVet fillColor="#405B7A" width={166} height={35}/>
+        
+        </Div>
+
+        <Text fontSize="xl" color="#000000" textAlign="center" mb={4}>
+          Your membership is courtesy of
+        </Text>
+        <Text fontSize="5xl" fontFamily={fontHauoraBold} textAlign="center" mb={28}>
+          {userInfo?.organizationName}
+        </Text>
+
+
+        <Button
+          h={49}
+          w={224}
+          rounded={24}
+          bg="#405B7A"
+          color="#fff"
+          fontSize="lg"
+          fontFamily={fontHauoraBold}
+          fontWeight="bold"
+          alignSelf="center"
+          
+          onPress={() => navigation.navigate("HomeScreen")}
+        >
+         Let’s start!
+        </Button>
+      </Div>
+    </Layout>
+  );
+};
+
+export default Welcome;
+
+const styles = StyleSheet.create({});
+
+  // <SvgXml xml={vites} width={166} height={35}  /> 

@@ -1,0 +1,16 @@
+sf-app-v2/node_modules/
+sf-server-v2/node_modules/
+sf-admin/node_modules/
+sf-app-v2/.env
+sf-server-v2/.env
+sf-admin/.env
+sf-server-v2/dist/
+sf-admin/dist/
+sf-app-v2/build/
+.idea/
+.vscode/
+*.log
+node_modules/
+.env
+dist/
+build/

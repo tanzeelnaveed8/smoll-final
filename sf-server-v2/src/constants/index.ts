@@ -1,0 +1,20 @@
+export const ALLOWED_ORIGIN = [
+  'http://localhost:5173',
+  'http://localhost:5174',
+  'http://localhost:5175',
+  'http://localhost:5176',
+  'http://localhost:8081', // Expo Metro
+  'http://localhost:19000',
+  'http://localhost:19001',
+  'http://localhost:19002',
+  'http://localhost:3000',
+  'https://staging-expert.smoll.me',
+  'https://staging-partner.smoll.me',
+  'https://staging-admin.smoll.me',
+  'https://staging-homesuite.smoll.me',
+  'https://expert.smoll.me',
+  'https://partner.smoll.me',
+  'https://admin.smoll.me',
+  'https://homesuite.smoll.me',
+  'https://api.smoll.me',
+];
