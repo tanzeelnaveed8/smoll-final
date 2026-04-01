@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   UseGuards,
   ValidationPipe,
@@ -26,6 +27,11 @@ export class OrderController {
   @Get()
   findAll(@GetUser() user: AuthUser) {
     return this.orderService.findAllByMember(user.id);
+  }
+
+  @Get(':id')
+  findOne(@GetUser() user: AuthUser, @Param('id') id: string) {
+    return this.orderService.findOneByMember(user.id, id);
   }
 
   @Post()

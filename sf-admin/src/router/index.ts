@@ -33,6 +33,7 @@ import SmollHomeScheduleView from '@/views/smoll-home/SmollHomeScheduleView.vue'
 import SmollHomeVisitsView from '@/views/smoll-home/SmollHomeVisitsView.vue'
 import SmollHomeVisitDetailView from '@/views/smoll-home/SmollHomeVisitDetailView.vue'
 import SmollHomeOrdersView from '@/views/smoll-home/SmollHomeOrdersView.vue'
+import SmollHomeOrderDetailView from '@/views/smoll-home/SmollHomeOrderDetailView.vue'
 import SmollHomeCustomersView from '@/views/smoll-home/SmollHomeCustomersView.vue'
 import SmollHomeAddCustomerView from '@/views/smoll-home/SmollHomeAddCustomerView.vue'
 import HomeVetsView from '@/views/smoll-home/HomeVetsView.vue'
@@ -275,6 +276,11 @@ const router = createRouter({
           path: 'orders',
           component: SmollHomeOrdersView,
           meta: { title: 'Vet Admin / Orders' }
+        },
+        {
+          path: 'orders/:id',
+          component: SmollHomeOrderDetailView,
+          meta: { title: 'Vet Admin / Order Details' }
         },
         {
           path: 'customers',

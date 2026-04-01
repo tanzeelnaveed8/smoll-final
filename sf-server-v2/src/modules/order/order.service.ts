@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Order } from './order.entity';
+import { Order, OrderStatus } from './order.entity';
 import { Member } from '../member/member.entity';
 import { CreateOrderDto } from './dto/create-order.dto';
 
@@ -43,6 +43,12 @@ export class OrderService {
     });
   }
 
+  async findOneByMember(memberId: string, id: string): Promise<Order | null> {
+    return this.orderRepo.findOne({
+      where: { id, memberId },
+    });
+  }
+
   async findAllForAdmin() {
     const orders = await this.orderRepo.find({
       order: { createdAt: 'DESC' },
@@ -58,5 +64,28 @@ export class OrderService {
       ...order,
       member: memberMap.get(order.memberId) ?? null,
     }));
+  }
+
+  async findOneForAdmin(id: string) {
+    const order = await this.orderRepo.findOne({
+      where: { id },
+    });
+
+    if (!order) return null;
+
+    const member = await this.memberRepo.findOne({
+      where: { id: order.memberId },
+      select: ['name', 'email'],
+    });
+
+    return {
+      ...order,
+      member: member ?? null,
+    };
+  }
+
+  async updateStatus(id: string, status: string) {
+    await this.orderRepo.update(id, { status: status as OrderStatus });
+    return this.findOneForAdmin(id);
   }
 }

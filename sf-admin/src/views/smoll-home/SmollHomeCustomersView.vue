@@ -1,8 +1,8 @@
 <template>
   <div class="d-flex flex-column gr-4">
-    <div class="d-flex justify-space-between align-center">
-      <div>
-        <h2 class="text-h6 font-weight-bold" style="color: #1565C0">Customers</h2>
+    <div class="d-flex justify-space-between align-center flex-wrap">
+      <div class="mb-2 mb-sm-0">
+        <h2 class="text-h6 text-sm-h5 font-weight-bold" style="color: #1565C0">Customers</h2>
         <p class="text-caption text-grey-darken-1">
           Customers visible only inside Vet Admin area
         </p>

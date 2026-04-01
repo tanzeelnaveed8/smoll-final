@@ -10,6 +10,7 @@ import { useCartStore } from "@/store/modules/cart";
 import type { CartItem } from "@/store/types/cart";
 import { useUserStore } from "@/store/modules/user";
 import { NavigationType } from "@/store/types";
+import { CommonActions } from "@react-navigation/native";
 import {
   IconClock,
   IconCreditCard,
@@ -208,7 +209,17 @@ const CheckoutScreen: React.FC<Props> = ({ navigation }) => {
       clearCart();
       setSchedule(null);
       showMessage({ message: "Payment successful! Your order is confirmed.", type: "success" });
-      navigation.navigate("RecentOrdersScreen");
+      
+      // Navigate to RecentOrdersScreen and clear intermediate screens from stack
+      navigation.dispatch(
+        CommonActions.reset({
+          ...navigation.getState(),
+          routes: [
+            ...navigation.getState().routes.slice(0, -1), // Remove CheckoutScreen
+            { name: "RecentOrdersScreen" },
+          ],
+        })
+      );
     } catch (e: any) {
       console.error("Payment error:", e);
       const errorMessage = e?.response?.data?.message || e?.message || "Payment failed. Please try again.";

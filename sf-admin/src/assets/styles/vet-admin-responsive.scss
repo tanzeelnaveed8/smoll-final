@@ -1,0 +1,294 @@
+// Responsive utilities for Vet Admin (Smoll Home) section
+
+// Breakpoints (Vuetify defaults)
+// xs: 0-600px
+// sm: 600-960px  
+// md: 960-1264px
+// lg: 1264-1920px
+// xl: 1920px+
+
+// Container max-width
+.vet-container {
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+// Responsive card grid
+.responsive-card-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .responsive-card-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .responsive-card-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 1264px) {
+  .responsive-card-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// Responsive stats grid
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+@media (min-width: 600px) {
+  .stats-grid {
+    gap: 16px;
+  }
+}
+
+@media (min-width: 960px) {
+  .stats-grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+// Responsive header
+.responsive-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 600px) {
+  .responsive-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+// Responsive action bar
+.responsive-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (min-width: 600px) {
+  .responsive-actions {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+// Responsive table wrapper
+.responsive-table-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.responsive-table-wrapper table {
+  min-width: 600px;
+}
+
+// Responsive spacing utilities
+.responsive-pa {
+  padding: 12px;
+}
+
+@media (min-width: 600px) {
+  .responsive-pa {
+    padding: 20px;
+  }
+}
+
+@media (min-width: 960px) {
+  .responsive-pa {
+    padding: 28px;
+  }
+}
+
+.responsive-mb {
+  margin-bottom: 16px;
+}
+
+@media (min-width: 600px) {
+  .responsive-mb {
+    margin-bottom: 24px;
+  }
+}
+
+// Hide/show utilities
+.mobile-only {
+  display: block !important;
+}
+
+.desktop-only {
+  display: none !important;
+}
+
+@media (min-width: 600px) {
+  .mobile-only {
+    display: none !important;
+  }
+  
+  .desktop-only {
+    display: block !important;
+  }
+}
+
+// Responsive font sizes
+.responsive-title {
+  font-size: 1.25rem;
+  line-height: 1.4;
+}
+
+@media (min-width: 600px) {
+  .responsive-title {
+    font-size: 1.5rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .responsive-title {
+    font-size: 1.75rem;
+  }
+}
+
+.responsive-subtitle {
+  font-size: 0.875rem;
+}
+
+@media (min-width: 600px) {
+  .responsive-subtitle {
+    font-size: 1rem;
+  }
+}
+
+// Card specific
+.responsive-card {
+  border-radius: 12px;
+}
+
+@media (min-width: 600px) {
+  .responsive-card {
+    border-radius: 16px;
+  }
+}
+
+// Button groups
+.responsive-btn-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (min-width: 600px) {
+  .responsive-btn-group {
+    flex-wrap: nowrap;
+  }
+}
+
+// Form responsive
+.responsive-form .form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .responsive-form .form-row {
+    flex-direction: row;
+    gap: 24px;
+  }
+  
+  .responsive-form .form-row > * {
+    flex: 1;
+  }
+}
+
+// Detail view responsive
+.responsive-detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+@media (min-width: 600px) {
+  .responsive-detail-header {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.responsive-detail-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 600px) {
+  .responsive-detail-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .responsive-detail-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+// Timeline/stepper responsive
+.responsive-timeline .timeline-item {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+}
+
+@media (min-width: 600px) {
+  .responsive-timeline .timeline-item {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+}
+
+// Stats card responsive
+.stat-card {
+  min-width: 0;
+}
+
+.stat-card .stat-value {
+  font-size: 1.5rem;
+}
+
+@media (min-width: 600px) {
+  .stat-card .stat-value {
+    font-size: 1.75rem;
+  }
+}
+
+@media (min-width: 960px) {
+  .stat-card .stat-value {
+    font-size: 2rem;
+  }
+}
+
+.stat-card .stat-label {
+  font-size: 0.75rem;
+}
+
+@media (min-width: 600px) {
+  .stat-card .stat-label {
+    font-size: 0.875rem;
+  }
+}

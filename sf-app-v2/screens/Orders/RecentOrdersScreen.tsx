@@ -49,8 +49,10 @@ const RecentOrdersScreen: React.FC<{ navigation: NavigationType }> = ({ navigati
         ...order,
         // Get first item's image if available
         imageUrl: order.items?.[0]?.imageUrl,
+        // Change "completed" status: "delivered" for products, "completed" for services
+        status: order.status === 'completed' ? (order.type === 'product' ? 'delivered' : 'completed') : order.status,
         // For service orders with schedule, add schedule info to display
-        petName: order.schedule?.labelTop 
+        petName: order.schedule?.labelTop
           ? `${order.schedule.labelTop} ${order.schedule.labelBottom || ''}`.trim()
           : undefined,
       }));
@@ -68,6 +70,10 @@ const RecentOrdersScreen: React.FC<{ navigation: NavigationType }> = ({ navigati
   useFocusEffect(
     useCallback(() => {
       fetchOrders();
+      // Poll for updates every 15 seconds when screen is focused
+      const interval = setInterval(fetchOrders, 15000);
+      
+      return () => clearInterval(interval);
     }, [])
   );
 
@@ -117,10 +123,7 @@ const RecentOrdersScreen: React.FC<{ navigation: NavigationType }> = ({ navigati
               <OrderCard
                 order={item}
                 onPress={() => {
-                  // Navigate to details if implemented
-                  if (item.type === "service") {
-                    navigation.navigate("AppointmentDetailsScreen", { id: item.id, type: "home-service" });
-                  }
+                  navigation.navigate("OrderDetailScreen", { id: item.id, order: item });
                 }}
               />
             )}
@@ -204,10 +207,14 @@ const OrderCard: React.FC<{ order: OrderItem; onPress: () => void }> = ({ order,
             </Div>
             
             <Div flexDir="row" alignItems="center">
-              <Text 
-                fontSize="xs" 
-                fontFamily={fontHauoraSemiBold} 
-                color={order.status === "completed" ? "#10B981" : "#F59E0B"}
+              <Text
+                fontSize="xs"
+                fontFamily={fontHauoraSemiBold}
+                color={
+                  order.status === "completed" || order.status === "delivered" ? "#10B981" : 
+                  order.status === "confirmed" ? "#3B82F6" : 
+                  order.status === "cancelled" ? "#EF4444" : "#F59E0B"
+                }
                 mr={4}
                 style={{ textTransform: "capitalize" }}
               >

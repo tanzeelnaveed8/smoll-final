@@ -97,6 +97,7 @@ import YourCartScreen from "./screens/HomeServices/YourCartScreen";
 import CheckoutScreen from "./screens/HomeServices/CheckoutScreen";
 import ProductDetailsScreen from "./screens/Nutritions/ProductDetailsScreen";
 import RecentOrdersScreen from "./screens/Orders/RecentOrdersScreen";
+import OrderDetailScreen from "./screens/Orders/OrderDetailScreen";
 import UnavailableScreen from "./screens/Consultation/UnavailableScreen";
 import EmergencyScreen from "./screens/EmergencyScreen";
 import NewOnboardingScreen from "./screens/NewOnboardingScreen";
@@ -660,6 +661,7 @@ component = { ClinicListScreen }
     <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
     <Stack.Screen name="ProductDetailsScreen" component={ProductDetailsScreen} />
     <Stack.Screen name="RecentOrdersScreen" component={RecentOrdersScreen} />
+    <Stack.Screen name="OrderDetailScreen" component={OrderDetailScreen} />
 
     <Stack.Screen name="PetProfileScreen" component = { PetProfileScreen } />
       <Stack.Screen name="GroupProfile" component = { GroupProfile } />

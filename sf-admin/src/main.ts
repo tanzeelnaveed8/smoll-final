@@ -1,4 +1,5 @@
 import './assets/global.css'
+import './assets/styles/vet-admin-responsive.scss'
 import 'vuetify/styles'
 import '@mdi/font/css/materialdesignicons.css'
 import 'vue3-toastify/dist/index.css'

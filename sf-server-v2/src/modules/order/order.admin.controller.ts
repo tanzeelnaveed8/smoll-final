@@ -1,4 +1,11 @@
-import { Controller, Get, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Get,
+  Param,
+  Patch,
+  UseGuards,
+} from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Roles } from 'src/decorators/role.decorator';
@@ -17,5 +24,18 @@ export class OrderAdminController {
   @Get()
   findAll() {
     return this.orderService.findAllForAdmin();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.orderService.findOneForAdmin(id);
+  }
+
+  @Patch(':id')
+  updateStatus(
+    @Param('id') id: string,
+    @Body() body: { status: string },
+  ) {
+    return this.orderService.updateStatus(id, body.status);
   }
 }
