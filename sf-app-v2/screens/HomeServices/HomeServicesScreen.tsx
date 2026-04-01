@@ -22,7 +22,7 @@ import {
   IconStethoscope,
   IconVaccine,
 } from "@tabler/icons-react-native";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   ActivityIndicator,
   useWindowDimensions,
@@ -32,6 +32,7 @@ import {
   Image,
 } from "react-native";
 import { Div, Text } from "react-native-magnus";
+import api from "@/utils/api";
 
 const CARD_GAP = 16;
 
@@ -67,8 +68,80 @@ const HomeServicesScreen: React.FC<{ navigation: NavigationType }> = ({
     useState<NutritionsSubTab>("all");
   const { services, products, loading: homeServicesLoading } = useHomeServices();
   const { products: aiPicksProducts, loading: aiPicksLoading, error: aiPicksError } = useAIPicks();
+  const [servicesAds, setServicesAds] = useState<any[]>([]);
+  const [productsAds, setProductsAds] = useState<any[]>([]);
+  const [adsLoading, setAdsLoading] = useState(true);
 
   const loading = homeServicesLoading;
+
+  useEffect(() => {
+    fetchAds();
+  }, []);
+
+  const fetchAds = async () => {
+    try {
+      setAdsLoading(true);
+      console.log('=== START FETCHING ADS ===');
+
+      console.log('Fetching services_top ads from /ad-spots/active?position=services_top');
+      const servicesResponse = await api.get('/ad-spots/active?position=services_top');
+      console.log('✅ Services top ads response:', JSON.stringify(servicesResponse.data, null, 2));
+
+      console.log('Fetching services_middle ads from /ad-spots/active?position=services_middle');
+      const servicesMiddleResponse = await api.get('/ad-spots/active?position=services_middle');
+      console.log('✅ Services middle ads response:', JSON.stringify(servicesMiddleResponse.data, null, 2));
+
+      const combinedServices = [
+        ...(servicesResponse.data || []),
+        ...(servicesMiddleResponse.data || [])
+      ];
+      setServicesAds(combinedServices);
+      console.log('📦 Final services ads count:', combinedServices.length);
+      console.log('📦 Final services ads:', JSON.stringify(combinedServices, null, 2));
+
+      console.log('Fetching products_top ads from /ad-spots/active?position=products_top');
+      const productsResponse = await api.get('/ad-spots/active?position=products_top');
+      console.log('✅ Products top ads response:', JSON.stringify(productsResponse.data, null, 2));
+
+      console.log('Fetching products_middle ads from /ad-spots/active?position=products_middle');
+      const productsMiddleResponse = await api.get('/ad-spots/active?position=products_middle');
+      console.log('✅ Products middle ads response:', JSON.stringify(productsMiddleResponse.data, null, 2));
+
+      const combinedProducts = [
+        ...(productsResponse.data || []),
+        ...(productsMiddleResponse.data || [])
+      ];
+      setProductsAds(combinedProducts);
+      console.log('📦 Final products ads count:', combinedProducts.length);
+      console.log('📦 Final products ads:', JSON.stringify(combinedProducts, null, 2));
+
+      console.log('=== END FETCHING ADS ===');
+    } catch (error) {
+      console.log("❌ Error fetching ads:", error);
+      console.log("Error details:", JSON.stringify(error, null, 2));
+      setServicesAds([]);
+      setProductsAds([]);
+    } finally {
+      setAdsLoading(false);
+    }
+  };
+
+  const handleAdNavigation = (actionUrl: string) => {
+    if (!actionUrl) return;
+    
+    // Map URL paths to screen names
+    const screenMap: Record<string, string> = {
+      '/smoll-home/services': 'HomeServicesScreen',
+      '/smoll-home/products': 'HomeServicesScreen',
+      '/smoll-home/nutritions': 'HomeServicesScreen',
+    };
+    
+    const screenName = screenMap[actionUrl] || actionUrl.replace(/^\//, '').split('/').pop();
+    
+    if (screenName) {
+      navigation.navigate(screenName);
+    }
+  };
 
   return (
     <Layout disableHeader>
@@ -152,107 +225,90 @@ const HomeServicesScreen: React.FC<{ navigation: NavigationType }> = ({
           </Div>
         ) : activeTab === "services" ? (
           <>
-            <Div flexDir="row" flexWrap="wrap" style={{ justifyContent: "space-between" }} mt={6} mb={CARD_GAP}>
-              {services.slice(0, 2).map((s) => (
-                <TouchableOpacity
-                  key={s.id}
-                  style={styles.serviceCard}
-                  activeOpacity={0.8}
-                  onPress={() =>
-                    navigation.navigate("ServiceDetailsScreen", { serviceId: s.id })
-                  }
-                >
-                  <Div
-                    w={40}
-                    h={40}
-                    bg={s.iconBg}
-                    rounded={12}
-                    justifyContent="center"
-                    alignItems="center"
-                    mb={12}
-                  >
-                    {getServiceIcon(s.title, s.iconColor)}
-                  </Div>
-                  <Text fontSize={"md"} fontFamily={fontHauoraBold} color="#222" mb={2}>
-                    {s.title}
-                  </Text>
-                  <Text fontSize={"xs"} color="#9CA3AF" fontFamily={fontHauora} mb={2}>
-                    {s.durationLabel}
-                  </Text>
-                  <Text fontSize={"sm"} fontFamily={fontHauoraBold} color={colorPrimary}>
-                    {s.priceLabel}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </Div>
-
-            <Div rounded={24} mb={10} px={20} py={16} bg="#000000">
-              <Text fontSize={"xs"} fontFamily={fontHauoraBold} color="#F9FAFB" style={{ textTransform: "uppercase", letterSpacing: 1.2 }} mb={6}>
-                Sponsored
-              </Text>
-              <Text fontSize={"xl"} fontFamily={fontHauoraBold} color="#FFFFFF" mb={10}>
-                20% OFF First Grooming
-              </Text>
-              <TouchableOpacity activeOpacity={0.85}>
-                <Div bg="#FFFFFF" px={18} py={10} rounded={16} alignSelf="flex-start">
-                  <Text fontSize={"sm"} fontFamily={fontHauoraBold} color="#111827" >Shop Now</Text>
-                </Div>
-              </TouchableOpacity>
-            </Div>
-
-            <Div flexDir="row" flexWrap="wrap" style={{ justifyContent: "space-between" }} mb={CARD_GAP}>
-              {services.slice(2, 4).map((s) => (
-                <TouchableOpacity
-                  key={s.id}
-                  style={styles.serviceCard}
-                  activeOpacity={0.8}
-                  onPress={() =>
-                    navigation.navigate("ServiceDetailsScreen", { serviceId: s.id })
-                  }
-                >
-                  <Div w={40} h={40} bg={s.iconBg} rounded={12} justifyContent="center" alignItems="center" mb={12}>
-                    {getServiceIcon(s.title, s.iconColor)}
-                  </Div>
-                  <Text fontSize={"md"} fontFamily={fontHauoraBold} color="#222" mb={2}>{s.title}</Text>
-                  <Text fontSize={"xs"} color="#9CA3AF" fontFamily={fontHauora} mb={2}>{s.durationLabel}</Text>
-                  <Text fontSize={"sm"} fontFamily={fontHauoraBold} color={colorPrimary}>{s.priceLabel}</Text>
-                </TouchableOpacity>
-              ))}
-            </Div>
-
-            <Div rounded={24} mb={10} px={20} py={16} bg="#000000">
-              <Text fontSize={"xs"} fontFamily={fontHauoraBold} color="#F9FAFB" style={{ textTransform: "uppercase", letterSpacing: 1.2 }} mb={6}>
-                Sponsored
-              </Text>
-              <Text fontSize={"xl"} fontFamily={fontHauoraBold} color="#FFFFFF" mb={10}>
-                Free Delivery on Meds
-              </Text>
-              <TouchableOpacity activeOpacity={0.85}>
-                <Div bg="#FFFFFF" px={18} py={10} rounded={16} alignSelf="flex-start">
-                  <Text fontSize={"sm"} fontFamily={fontHauoraBold} color="#111827" >Shop Now</Text>
-                </Div>
-              </TouchableOpacity>
-            </Div>
-
-            <Div flexDir="row" flexWrap="wrap" style={{ justifyContent: "space-between" }} mb={CARD_GAP}>
-              {services.slice(4, 6).map((s) => (
-                <TouchableOpacity
-                  key={s.id}
-                  style={styles.serviceCard}
-                  activeOpacity={0.8}
-                  onPress={() =>
-                    navigation.navigate("ServiceDetailsScreen", { serviceId: s.id })
-                  }
-                >
-                  <Div w={40} h={40} bg={s.iconBg} rounded={12} justifyContent="center" alignItems="center" mb={12}>
-                    {getServiceIcon(s.title, s.iconColor)}
-                  </Div>
-                  <Text fontSize={"sm"} fontFamily={fontHauoraBold} color="#222" mb={2}>{s.title}</Text>
-                  <Text fontSize={10} color="#9CA3AF" fontFamily={fontHauora} mb={2}>{s.durationLabel}</Text>
-                  <Text fontSize={"xs"} fontFamily={fontHauoraBold} color={colorPrimary}>{s.priceLabel}</Text>
-                </TouchableOpacity>
-              ))}
-            </Div>
+            {/* Services with interleaved ads - 2 services then 1 ad */}
+            {(() => {
+              const elements = [];
+              let serviceIndex = 0;
+              let adIndex = 0;
+              
+              while (serviceIndex < services.length || adIndex < servicesAds.length) {
+                // Render 2 services
+                if (serviceIndex < services.length) {
+                  elements.push(
+                    <Div flexDir="row" flexWrap="wrap" style={{ justifyContent: "space-between" }} mt={serviceIndex === 0 ? 6 : 0} mb={CARD_GAP} key={`services-row-${serviceIndex}`}>
+                      {services.slice(serviceIndex, serviceIndex + 2).map((s) => (
+                        <TouchableOpacity
+                          key={s.id}
+                          style={styles.serviceCard}
+                          activeOpacity={0.8}
+                          onPress={() =>
+                            navigation.navigate("ServiceDetailsScreen", { serviceId: s.id })
+                          }
+                        >
+                          <Div
+                            w={40}
+                            h={40}
+                            bg={s.iconBg}
+                            rounded={12}
+                            justifyContent="center"
+                            alignItems="center"
+                            mb={12}
+                          >
+                            {getServiceIcon(s.title, s.iconColor)}
+                          </Div>
+                          <Text fontSize={"md"} fontFamily={fontHauoraBold} color="#222" mb={2}>
+                            {s.title}
+                          </Text>
+                          <Text fontSize={"xs"} color="#9CA3AF" fontFamily={fontHauora} mb={2}>
+                            {s.durationLabel}
+                          </Text>
+                          <Div style={{ marginTop: 'auto' }}>
+                            <Text fontSize={"sm"} fontFamily={fontHauoraBold} color={colorPrimary}>
+                              {s.priceLabel}
+                            </Text>
+                          </Div>
+                        </TouchableOpacity>
+                      ))}
+                    </Div>
+                  );
+                  serviceIndex += 2;
+                }
+                
+                // Render 1 ad after every 2 services
+                if (adIndex < servicesAds.length && serviceIndex <= services.length) {
+                  const ad = servicesAds[adIndex];
+                  console.log('🎯 Rendering service ad:', ad);
+                  console.log('🖼️ Image URL:', ad.imageUrl || ad.image || ad.fileUrl);
+                  elements.push(
+                    <Div
+                      key={`service-ad-${ad.id || adIndex}`}
+                      rounded={24}
+                      mb={10}
+                      px={20}
+                      py={16}
+                      bg="#000000"
+                      style={{ overflow: 'hidden' }}
+                    >
+                      {(ad.imageUrl || ad.image || ad.fileUrl) && (
+                        <Image source={{ uri: ad.imageUrl || ad.image || ad.fileUrl }} style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 24 }} resizeMode="cover" />
+                      )}
+                      <Div style={{ position: 'relative', zIndex: 1 }}>
+                        <Text fontSize={"xs"} fontFamily={fontHauoraBold} color="#F9FAFB" style={{ textTransform: "uppercase", letterSpacing: 1.2, textShadowColor: 'rgba(0,0,0,0.5)', textShadowOffset: {width: 0, height: 1}, textShadowRadius: 4 }} mb={6}>Sponsored</Text>
+                        <Text fontSize={"xl"} fontFamily={fontHauoraBold} color="#FFFFFF" mb={10} style={{ textShadowColor: 'rgba(0,0,0,0.5)', textShadowOffset: {width: 0, height: 1}, textShadowRadius: 4 }}>{ad.title}</Text>
+                        <TouchableOpacity activeOpacity={0.85} onPress={() => ad.actionUrl && handleAdNavigation(ad.actionUrl)}>
+                          <Div bg="#FFFFFF" px={18} py={10} rounded={16} alignSelf="flex-start">
+                            <Text fontSize={"sm"} fontFamily={fontHauoraBold} color="#111827">{ad.actionLabel || "Shop Now"}</Text>
+                          </Div>
+                        </TouchableOpacity>
+                      </Div>
+                    </Div>
+                  );
+                  adIndex++;
+                }
+              }
+              
+              return elements;
+            })()}
 
             <Div flexDir="row" alignItems="center" bg="#EFF6FF" borderWidth={1} borderColor="#BFDBFE" rounded={12} p={16} style={{ gap: 12 }} mb={8}>
               <IconShieldCheck size={20} color={colorPrimary} />
@@ -284,97 +340,78 @@ const HomeServicesScreen: React.FC<{ navigation: NavigationType }> = ({
 
             {nutritionsSubTab === "all" ? (
               <>
-                <Div flexDir="row" flexWrap="wrap" style={{ marginHorizontal: -CARD_GAP / 2 }} mb={6}>
-                  {products.slice(0, 2).map((p) => (
-                    <TouchableOpacity
-                      key={p.id}
-                      style={[styles.productCard, { width: CARD_WIDTH }]}
-                      activeOpacity={0.8}
-                      onPress={() =>
-                        navigation.navigate("ProductDetailsScreen", { productId: p.id })
-                      }
-                    >
-                      <Div mb={12}>
-                        {p.imageUrl ? (
-                          <Image source={{ uri: p.imageUrl }} style={{ width: "100%", height: 120, borderRadius: 12 }} resizeMode="cover" />
-                        ) : (
-                          <Image source={require("@/assets/images/no-image.png")} style={{ width: "100%", height: 120, borderRadius: 12 }} resizeMode="cover" />
-                        )}
-                      </Div>
-                      <Text fontSize={"md"} fontFamily={fontHauoraBold} color="#222" mb={4}>{p.title}</Text>
-                      <Text fontSize={"xs"} color="#9CA3AF" fontFamily={fontHauora} mb={8} style={{ flex: 1 }}>{p.description}</Text>
-                      <Text fontSize={"md"} fontFamily={fontHauoraBold} color={colorPrimary}>{p.priceLabel}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </Div>
-
-                <Div rounded={24} mb={10} px={20} py={16} bg="#000000">
-                  <Text fontSize={"xs"} fontFamily={fontHauoraBold} color="#F9FAFB" style={{ textTransform: "uppercase", letterSpacing: 1.2 }} mb={6}>Sponsored</Text>
-                  <Text fontSize={"xl"} fontFamily={fontHauoraBold} color="#FFFFFF" mb={10}>20% OFF First Grooming</Text>
-                  <TouchableOpacity activeOpacity={0.85}>
-                    <Div bg="#FFFFFF" px={18} py={10} rounded={16} alignSelf="flex-start">
-                      <Text fontSize={"sm"} fontFamily={fontHauoraBold} color="#111827" >Shop Now</Text>
-                    </Div>
-                  </TouchableOpacity>
-                </Div>
-
-                <Div flexDir="row" flexWrap="wrap" style={{ marginHorizontal: -CARD_GAP / 2 }} mb={6}>
-                  {products.slice(2, 4).map((p) => (
-                    <TouchableOpacity
-                      key={p.id}
-                      style={[styles.productCard, { width: CARD_WIDTH }]}
-                      activeOpacity={0.8}
-                      onPress={() =>
-                        navigation.navigate("ProductDetailsScreen", { productId: p.id })
-                      }
-                    >
-                      <Div mb={12}>
-                        {p.imageUrl ? (
-                          <Image source={{ uri: p.imageUrl }} style={{ width: "100%", height: 120, borderRadius: 12 }} resizeMode="cover" />
-                        ) : (
-                          <Image source={require("@/assets/images/no-image.png")} style={{ width: "100%", height: 120, borderRadius: 12 }} resizeMode="cover" />
-                        )}
-                      </Div>
-                      <Text fontSize={"sm"} fontFamily={fontHauoraBold} color="#222" mb={4}>{p.title}</Text>
-                      <Text fontSize={10} color="#9CA3AF" fontFamily={fontHauora} mb={8} style={{ flex: 1 }}>{p.description}</Text>
-                      <Text fontSize={"sm"} fontFamily={fontHauoraBold} color={colorPrimary}>{p.priceLabel}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </Div>
-
-                <Div rounded={24} mb={10} px={20} py={16} bg="#000000">
-                  <Text fontSize={"xs"} fontFamily={fontHauoraBold} color="#F9FAFB" style={{ textTransform: "uppercase", letterSpacing: 1.2 }} mb={6}>Sponsored</Text>
-                  <Text fontSize={"xl"} fontFamily={fontHauoraBold} color="#FFFFFF" mb={10}>Free Delivery on Meds</Text>
-                  <TouchableOpacity activeOpacity={0.85}>
-                    <Div bg="#FFFFFF" px={18} py={10} rounded={16} alignSelf="flex-start">
-                      <Text fontSize={"sm"} fontFamily={fontHauoraBold} color="#111827" >Shop Now</Text>
-                    </Div>
-                  </TouchableOpacity>
-                </Div>
-
-                <Div flexDir="row" flexWrap="wrap" style={{ marginHorizontal: -CARD_GAP / 2 }} mb={6}>
-                  {products.slice(4, 6).map((p) => (
-                    <TouchableOpacity
-                      key={p.id}
-                      style={[styles.productCard, { width: CARD_WIDTH }]}
-                      activeOpacity={0.8}
-                      onPress={() =>
-                        navigation.navigate("ProductDetailsScreen", { productId: p.id })
-                      }
-                    >
-                      <Div mb={12}>
-                        {p.imageUrl ? (
-                          <Image source={{ uri: p.imageUrl }} style={{ width: "100%", height: 120, borderRadius: 12 }} resizeMode="cover" />
-                        ) : (
-                          <Image source={require("@/assets/images/no-image.png")} style={{ width: "100%", height: 120, borderRadius: 12 }} resizeMode="cover" />
-                        )}
-                      </Div>
-                      <Text fontSize={"sm"} fontFamily={fontHauoraBold} color="#222" mb={4}>{p.title}</Text>
-                      <Text fontSize={10} color="#9CA3AF" fontFamily={fontHauora} mb={8} style={{ flex: 1 }}>{p.description}</Text>
-                      <Text fontSize={"sm"} fontFamily={fontHauoraBold} color={colorPrimary}>{p.priceLabel}</Text>
-                    </TouchableOpacity>
-                  ))}
-                </Div>
+                {/* Products with interleaved ads - 2 products then 1 ad */}
+                {(() => {
+                  const elements = [];
+                  let productIndex = 0;
+                  let adIndex = 0;
+                  
+                  while (productIndex < products.length || adIndex < productsAds.length) {
+                    // Render 2 products
+                    if (productIndex < products.length) {
+                      elements.push(
+                        <Div flexDir="row" flexWrap="wrap" style={{ marginHorizontal: -CARD_GAP / 2 }} mb={6} key={`products-row-${productIndex}`}>
+                          {products.slice(productIndex, productIndex + 2).map((p) => (
+                            <TouchableOpacity
+                              key={p.id}
+                              style={[styles.productCard, { width: CARD_WIDTH }]}
+                              activeOpacity={0.8}
+                              onPress={() =>
+                                navigation.navigate("ProductDetailsScreen", { productId: p.id })
+                              }
+                            >
+                              <Div mb={12}>
+                                {p.imageUrl ? (
+                                  <Image source={{ uri: p.imageUrl }} style={{ width: "100%", height: 120, borderRadius: 12 }} resizeMode="cover" />
+                                ) : (
+                                  <Image source={require("@/assets/images/no-image.png")} style={{ width: "100%", height: 120, borderRadius: 12 }} resizeMode="cover" />
+                                )}
+                              </Div>
+                              <Text fontSize={"md"} fontFamily={fontHauoraBold} color="#222" mb={4}>{p.title}</Text>
+                              <Text fontSize={"xs"} color="#9CA3AF" fontFamily={fontHauora} mb={8} style={{ flex: 1 }}>{p.description}</Text>
+                              <Text fontSize={"md"} fontFamily={fontHauoraBold} color={colorPrimary}>{p.priceLabel}</Text>
+                            </TouchableOpacity>
+                          ))}
+                        </Div>
+                      );
+                      productIndex += 2;
+                    }
+                    
+                    // Render 1 ad after every 2 products
+                    if (adIndex < productsAds.length && productIndex <= products.length) {
+                      const ad = productsAds[adIndex];
+                      console.log('🎯 Rendering product ad:', ad);
+                      console.log('🖼️ Image URL:', ad.imageUrl || ad.image || ad.fileUrl);
+                      elements.push(
+                        <Div
+                          key={`product-ad-${ad.id || adIndex}`}
+                          rounded={24}
+                          mb={10}
+                          px={20}
+                          py={16}
+                          bg="#000000"
+                          style={{ overflow: 'hidden' }}
+                        >
+                          {(ad.imageUrl || ad.image || ad.fileUrl) && (
+                            <Image source={{ uri: ad.imageUrl || ad.image || ad.fileUrl }} style={{ position: 'absolute', left: 0, right: 0, top: 0, bottom: 0, borderRadius: 24 }} resizeMode="cover" />
+                          )}
+                          <Div style={{ position: 'relative', zIndex: 1 }}>
+                            <Text fontSize={"xs"} fontFamily={fontHauoraBold} color="#F9FAFB" style={{ textTransform: "uppercase", letterSpacing: 1.2, textShadowColor: 'rgba(0,0,0,0.5)', textShadowOffset: {width: 0, height: 1}, textShadowRadius: 4 }} mb={6}>Sponsored</Text>
+                            <Text fontSize={"xl"} fontFamily={fontHauoraBold} color="#FFFFFF" mb={10} style={{ textShadowColor: 'rgba(0,0,0,0.5)', textShadowOffset: {width: 0, height: 1}, textShadowRadius: 4 }}>{ad.title}</Text>
+                            <TouchableOpacity activeOpacity={0.85} onPress={() => ad.actionUrl && handleAdNavigation(ad.actionUrl)}>
+                              <Div bg="#FFFFFF" px={18} py={10} rounded={16} alignSelf="flex-start">
+                                <Text fontSize={"sm"} fontFamily={fontHauoraBold} color="#111827">{ad.actionLabel || "Shop Now"}</Text>
+                              </Div>
+                            </TouchableOpacity>
+                          </Div>
+                        </Div>
+                      );
+                      adIndex++;
+                    }
+                  }
+                  
+                  return elements;
+                })()}
               </>
             ) : (
               <Div style={{ gap: 16 }} mb={8}>
@@ -501,6 +538,8 @@ const styles = StyleSheet.create({
     elevation: 1,
     borderWidth: 1,
     borderColor: "#F3F4F6",
+    flexDirection: "column",
+    justifyContent: "flex-start",
   },
   productCard: {
     backgroundColor: "#fff",

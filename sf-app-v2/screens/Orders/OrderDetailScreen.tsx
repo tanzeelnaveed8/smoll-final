@@ -134,51 +134,49 @@ const OrderDetailScreen: React.FC<{ navigation: NavigationType }> = ({ navigatio
             {order.title}
           </Text>
 
-          <Div flexDir="column" mb={12}>
-            <Div flexDir="row" alignItems="center" mb={8}>
-              <Text fontSize="md" fontFamily={fontHauoraMedium} color="#6B7280" mr={8}>
-                Status:
-              </Text>
-              <Text
-                fontSize="md"
-                fontFamily={fontHauoraSemiBold}
-                color={
-                  order.status === "completed" || order.status === "delivered" ? "#10B981" :
-                  order.status === "confirmed" ? "#3B82F6" :
-                  order.status === "cancelled" ? "#EF4444" : "#F59E0B"
-                }
-                style={{ textTransform: "capitalize" }}
-              >
-                {order.status}
-              </Text>
-            </Div>
-            
-            {/* Day & Time - Only for Service Orders */}
-            {order.type === "service" && order.schedule && (
-              <Div flexDir="row" alignItems="center" flexWrap="wrap">
-                {order.schedule.labelTop && (
-                  <Div flexDir="row" alignItems="center" mr={16} mb={4}>
-                    <Text fontSize="md" fontFamily={fontHauoraMedium} color="#6B7280" mr={4}>
-                      Day:
-                    </Text>
-                    <Text fontSize="md" fontFamily={fontHauoraBold} color="#111827">
-                      {order.schedule.labelTop} {order.schedule.labelBottom || ""}
-                    </Text>
-                  </Div>
-                )}
-                {order.schedule.time && (
-                  <Div flexDir="row" alignItems="center" mb={4}>
-                    <Text fontSize="md" fontFamily={fontHauoraMedium} color="#6B7280" mr={4}>
-                      Time:
-                    </Text>
-                    <Text fontSize="md" fontFamily={fontHauoraBold} color="#111827">
-                      {order.schedule.time}
-                    </Text>
-                  </Div>
-                )}
-              </Div>
-            )}
+          <Div flexDir="row" alignItems="center" mb={8}>
+            <Text fontSize="md" fontFamily={fontHauoraMedium} color="#6B7280" mr={8}>
+              Status:
+            </Text>
+            <Text
+              fontSize="md"
+              fontFamily={fontHauoraSemiBold}
+              color={
+                order.status === "completed" || order.status === "delivered" ? "#10B981" :
+                order.status === "confirmed" ? "#3B82F6" :
+                order.status === "cancelled" ? "#EF4444" : "#F59E0B"
+              }
+              style={{ textTransform: "capitalize" }}
+            >
+              {order.status}
+            </Text>
           </Div>
+
+          {/* Day & Time - Only for Service Orders */}
+          {order.type === "service" && order.schedule && (order.schedule.labelTop || order.schedule.time) && (
+            <Div flexDir="row" alignItems="center" flexWrap="wrap" mb={12}>
+              {order.schedule.labelTop && (
+                <Div flexDir="row" alignItems="center" mr={16} mb={4}>
+                  <Text fontSize="md" fontFamily={fontHauoraMedium} color="#6B7280" mr={4}>
+                    Day:
+                  </Text>
+                  <Text fontSize="md" fontFamily={fontHauoraBold} color="#111827">
+                    {order.schedule.labelTop} {order.schedule.labelBottom || ""}
+                  </Text>
+                </Div>
+              )}
+              {order.schedule.time && (
+                <Div flexDir="row" alignItems="center" mb={4}>
+                  <Text fontSize="md" fontFamily={fontHauoraMedium} color="#6B7280" mr={4}>
+                    Time:
+                  </Text>
+                  <Text fontSize="md" fontFamily={fontHauoraBold} color="#111827">
+                    {order.schedule.time}
+                  </Text>
+                </Div>
+              )}
+            </Div>
+          )}
 
           <Div flexDir="row" justifyContent="space-between" alignItems="center" pt={12} borderTopWidth={1} borderColor="#F3F4F6">
             <Text fontSize="lg" fontFamily={fontHauoraBold} color="#111827">
@@ -250,7 +248,7 @@ const OrderDetailScreen: React.FC<{ navigation: NavigationType }> = ({ navigatio
         </Div>
 
         {/* Order Summary */}
-        <Div bg="#FFF" p={20} mt={16} rounded={20} shadow="sm">
+        <Div bg="#FFF" p={20} mt={16} mb={32} rounded={20} shadow="sm">
           <Text fontSize="xl" fontFamily={fontHauoraBold} color="#111827" mb={16}>
             Order Summary
           </Text>
@@ -291,6 +289,8 @@ const OrderDetailScreen: React.FC<{ navigation: NavigationType }> = ({ navigatio
             </Text>
           </Div>
         </Div>
+
+        <Div h={40} />
       </ScrollView>
     </Layout>
   );

@@ -324,36 +324,39 @@ const { text, color } = getSubscriptionInfo();
     <Layout showBack onBackPress={() => navigation.goBack()} title="You">
       <ScrollDiv showsVerticalScrollIndicator={false}>
         {/* Membership Card */}
-        <Div >
-          <Text
-            fontWeight="400"
-            color="#000"
-            fontSize={"lg"}
-            fontFamily={fontHauora}
-            lineHeight={24}
-            mb={8}
-          >
-            Your Membership
-          </Text>
-          
+        <TouchableOpacity
+          onPress={() => navigation.navigate("SubscriptionScreen")}
+          activeOpacity={0.7}
+        >
+          <Div>
+            <Text
+              fontWeight="400"
+              color="#000"
+              fontSize={"lg"}
+              fontFamily={fontHauora}
+              lineHeight={24}
+              mb={8}
+            >
+              Your Membership
+            </Text>
+
             <Div flex={1} justifyContent="space-between">
-           {planSvg} 
-              
+              {planSvg}
             </Div>
 
-           <Text
-  fontWeight="400"
-  color={color}
-  fontSize="lg"
-  fontFamily={fontHauora}
-  lineHeight={24}
-  mb={8}
-  mt={5}
->
-  {text}
-</Text>
-       
-        </Div>
+            <Text
+              fontWeight="400"
+              color={color}
+              fontSize="lg"
+              fontFamily={fontHauora}
+              lineHeight={24}
+              mb={8}
+              mt={5}
+            >
+              {text}
+            </Text>
+          </Div>
+        </TouchableOpacity>
         
 
 

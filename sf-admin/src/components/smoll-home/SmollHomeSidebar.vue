@@ -71,6 +71,7 @@ const navItems = [
   { title: 'Services', icon: 'mdi-medical-bag', to: '/smoll-home/services' },
   { title: 'Products', icon: 'mdi-package-variant-closed', to: '/smoll-home/products' },
   { title: 'Orders', icon: 'mdi-format-list-checks', to: '/smoll-home/orders' },
+  { title: 'Sponsored Ads', icon: 'mdi-bullhorn', to: '/smoll-home/ads' },
   { title: 'Customers', icon: 'mdi-account-group', to: '/smoll-home/customers' },
   { title: 'Veterinaries', icon: 'mdi-stethoscope', to: '/smoll-home/veterinarians' },
   { title: 'Finance', icon: 'mdi-chart-line', to: '/smoll-home/finance' }
