@@ -73,7 +73,7 @@ const HomeScreen: React.FC<Props> = (props) => {
                 style={styles.iconButton}
               >
                 <Div position="relative">
-                  <IconBell size={26} color="#555555" strokeWidth={1.4} />
+                  <IconBell size={30} color="#1a1a1a" strokeWidth={1.4} />
                   {hasNotifications && (
                     <Div
                       position="absolute"
@@ -96,7 +96,7 @@ const HomeScreen: React.FC<Props> = (props) => {
                   style={styles.iconButton}
                 >
                   <Div position="relative">
-                    <IconShoppingCart size={26} color="#555555" strokeWidth={1.4} />
+                    <IconShoppingCart size={30} color="#1a1a1a" strokeWidth={1.4} />
                     <Div
                       position="absolute"
                       top={-2}
@@ -116,14 +116,14 @@ const HomeScreen: React.FC<Props> = (props) => {
                 onPress={() => props.navigation.navigate("SettingsMainScreen")}
                 style={styles.iconButton}
               >
-                <IconUser size={26} color="#555555" strokeWidth={1.4} />
+                <IconUser size={30} color="#1a1a1a" strokeWidth={1.4} />
               </TouchableOpacity>
             </Div>
           </Div>
 
           {/* Greeting */}
-          <Div mb={20}>
-            <Text fontSize={"4xl"} fontFamily={fontHeading} color="#111111" mb={4}>
+          <Div mb={32}>
+            <Text fontSize={"5xl"} fontFamily={fontHeading} color="#111111" mb={4}>
               Hi, {displayFirstName}
             </Text>
             <Text fontSize={"lg"} fontFamily={fontHauora} color="#494949">
@@ -138,16 +138,16 @@ const HomeScreen: React.FC<Props> = (props) => {
             style={[styles.primaryCard, { flex: 1.1 }]}
           >
             <Div pt={4}>
-              <Text fontSize={"xl"} fontFamily={fontHauoraBold} color="#111827" mb={4}>
+              <Text fontSize={"4xl"} fontFamily={fontHauoraBold} color="#111827" mb={4}>
                 smoll®Home
               </Text>
-              <Text fontSize={"md"} fontFamily={fontHauoraMedium} color="#6B7280" lineHeight={20}>
+              <Text fontSize={"lg"} fontFamily={fontHauoraBold} color="#111111" lineHeight={24}>
                 Book Home Visits
               </Text>
             </Div>
             <Image source={smollHomeIllustration} style={styles.primaryHomeImage} />
             <Div style={styles.primaryArrowWrap}>
-              <IconArrowRight size={28} color="#111827" strokeWidth={2.5} />
+              <IconArrowRight size={32} color="#111827" strokeWidth={2.5} />
             </Div>
           </TouchableOpacity>
 
@@ -160,16 +160,16 @@ const HomeScreen: React.FC<Props> = (props) => {
             style={[styles.primaryCard, { flex: 1.1 }]}
           >
             <Div pt={4}>
-              <Text fontSize={"xl"} fontFamily={fontHauoraBold} color="#111827" mb={4}>
+              <Text fontSize={"4xl"} fontFamily={fontHauoraBold} color="#111827" mb={4}>
                 smoll®Vet
               </Text>
-              <Text fontSize={"md"} fontFamily={fontHauoraMedium} color="#6B7280" lineHeight={20}>
+              <Text fontSize={"lg"} fontFamily={fontHauoraBold} color="#111111" lineHeight={24}>
                 Consult over Video
               </Text>
             </Div>
             <Image source={smollVetIllustration} style={styles.primaryVetImage} />
             <Div style={styles.primaryArrowWrap}>
-              <IconArrowRight size={28} color="#111827" strokeWidth={2.5} />
+              <IconArrowRight size={32} color="#111827" strokeWidth={2.5} />
             </Div>
           </TouchableOpacity>
 
@@ -184,10 +184,10 @@ const HomeScreen: React.FC<Props> = (props) => {
             >
               <Image source={appointmentIllustration} style={styles.secondaryIconImage} />
               <Div>
-                <Text fontSize={"md"} fontFamily={fontHauoraBold} color="#111827" mb={2}>
+                <Text fontSize={"xl"} fontFamily={fontHauoraBold} color="#111827" mb={2}>
                   Appointment
                 </Text>
-                <Text fontSize={"sm"} fontFamily={fontHauoraMedium} color="#6B7280" lineHeight={18}>
+                <Text fontSize={"sm"} fontFamily={fontHauoraMedium} color="#111111" lineHeight={18}>
                   Your appointment Here
                 </Text>
               </Div>
@@ -200,10 +200,10 @@ const HomeScreen: React.FC<Props> = (props) => {
             >
               <Image source={networkIllustration} style={styles.secondaryIconImage} />
               <Div>
-                <Text fontSize={"md"} fontFamily={fontHauoraBold} color="#111827" mb={2}>
+                <Text fontSize={"xl"} fontFamily={fontHauoraBold} color="#111827" mb={2}>
                   Network
                 </Text>
-                <Text fontSize={"sm"} fontFamily={fontHauoraMedium} color="#6B7280" lineHeight={18}>
+                <Text fontSize={"sm"} fontFamily={fontHauoraMedium} color="#111111" lineHeight={18}>
                   Our partners clinics
                 </Text>
               </Div>
@@ -257,9 +257,9 @@ const styles = StyleSheet.create({
   },
   primaryVetImage: {
     position: "absolute",
-    right: -1,
+    right: 20,
     bottom: -5,
-    width: "45%",
+    width: "40%",
     height: "105%",
     resizeMode: "contain",
   },
@@ -280,8 +280,9 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   secondaryIconImage: {
-    width: SCREEN_WIDTH < 350 ? 44 : 56,
-    height: SCREEN_WIDTH < 350 ? 44 : 56,
+    width: SCREEN_WIDTH < 350 ? 56 : 64,
+    height: SCREEN_WIDTH < 350 ? 56 : 64,
     resizeMode: "contain",
+    marginBottom: 8,
   },
 });

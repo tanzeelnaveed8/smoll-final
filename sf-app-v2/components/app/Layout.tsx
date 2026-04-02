@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     backgroundColor: "#FAF8F5",
     paddingHorizontal: 20,
-    paddingBottom: 20,
+    paddingBottom: 0,
   },
   titleContainer: {
     alignItems: "center",

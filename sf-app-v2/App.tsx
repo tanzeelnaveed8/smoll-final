@@ -604,7 +604,7 @@ duration = { 2500}
   >
   <SocketProvider>
   <Stack.Navigator
-                  initialRouteName="SplashScreen"
+                  initialRouteName="HomeScreen"
 screenOptions = {{
   headerShown: false,
     statusBarColor: "#FAF8F5",
