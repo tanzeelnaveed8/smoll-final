@@ -51,7 +51,8 @@ const SettingPersonalInfoScreen: React.FC<{ navigation: NavigationType }> = ({ n
       setIsLoading(true);
       await deactivateAccount();
 
-      await AsyncStorage.setItem("accessToken", "");
+      await AsyncStorage.removeItem("accessToken");
+      await AsyncStorage.removeItem("userInfo");
       AsyncStorage.removeItem("hideAccountSetupBtn");
       navigation.navigate("NewOnboardingScreen");
 

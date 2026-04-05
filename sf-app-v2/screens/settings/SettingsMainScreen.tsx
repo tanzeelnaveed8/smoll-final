@@ -255,8 +255,9 @@ const SettingsMainScreen: React.FC<{ navigation: NavigationType }> = ({ navigati
   const handleLogout = async () => {
     setShowLogoutModal(false);
     
-    await AsyncStorage.setItem("subscription", "");
-    await AsyncStorage.setItem("accessToken", "");
+    await AsyncStorage.removeItem("subscription");
+    await AsyncStorage.removeItem("accessToken");
+    await AsyncStorage.removeItem("userInfo");
     AsyncStorage.removeItem("hideAccountSetupBtn");
 
     navigation.navigate("NewOnboardingScreen");
