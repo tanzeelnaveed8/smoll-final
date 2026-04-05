@@ -45,7 +45,7 @@ const HomeScreen: React.FC<Props> = (props) => {
   const displayName = user?.name ? user.name : "Jane";
   const displayFirstName = displayName.split(" ")[0] || "Jane";
   const hasNotifications = Boolean(notifications?.count && notifications.count > 0);
-  const cartItemsCount = useCartStore((state) => state.items.filter((item) => item.type === "product").length);
+  const cartItemsCount = useCartStore((state) => state.items.length);
 
   return (
     <>
